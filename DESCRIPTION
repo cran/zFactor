@@ -1,0 +1,23 @@
+Package: zFactor
+Type: Package
+Title: Calculate the Compressibility Factor 'z' for Hydrocarbon Gases
+Version: 0.1.4
+Author: Alfonso R. Reyes <alfonso.reyes@oilgainsanalytics.com>
+Maintainer: Alfonso R. Reyes <alfonso.reyes@oilgainsanalytics.com>
+Description: Computational algorithms to solve equations and find the
+    compressibility factor (z). Correlations available: Hall-Yarborough, 
+    Dranchuk-AbuKassem, Dranchuk-Purvis-Robinson, Beggs-Brill and 
+    a Artificial Neural Network correlation Kamyab et al . It uses the original 
+    Standing-Katz chart for statistical comparison and plotting.
+Imports: rootSolve, tidyr, ggplot2, data.table, tibble, dplyr
+Suggests: knitr, rmarkdown, testthat
+Depends: R (>= 2.10)
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
+VignetteBuilder: knitr
+NeedsCompilation: no
+Packaged: 2017-06-28 17:00:49 UTC; msfz751
+Repository: CRAN
+Date/Publication: 2017-06-28 17:34:20 UTC
