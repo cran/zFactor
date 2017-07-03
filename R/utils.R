@@ -1,3 +1,13 @@
+# A dataframe with information about any of the compressibility correlation available
+z_correlations <- data.frame(
+    short = c("BB", "HY", "DAK", "DPR", "SH", "N10"),
+    long = c("Beggs-Brill", "Hall-Yarborough", "Dranchuk-AbuKassem",
+             "Dranchuk-Purvis-Robinson", "Shell", "Ann10"),
+    function_name = c("z.BeggsBrill", "z.HallYarborough", "z.DranchukAbuKassem",
+                      "z.DranchukPurvisRobinson", "z.Shell", "z.Ann10"),
+    stringsAsFactors = FALSE
+)
+
 
 #' split a long string to create a vector for testing
 #'
@@ -24,15 +34,20 @@ matrixToDataframe <- function(mat) {
     df
 }
 
+
 matrixWithCorrelation <- function(ppr_vector, tpr_vector, corr.Function) {
     # create a matrix using a z-factor correlation function and sapply
-    corr_matrix <- sapply(ppr_vector, function(x)
+    co <- sapply(ppr_vector, function(x)
         sapply(tpr_vector, function(y) corr.Function(pres.pr = x, temp.pr = y)))
 
-    rownames(corr_matrix) <- tpr_vector
-    colnames(corr_matrix) <- ppr_vector
-    corr_matrix
+    if (length(ppr_vector) > 1 || length(tpr_vector) > 1) {
+        co <- matrix(co, nrow = length(tpr_vector), ncol = length(ppr_vector))
+        rownames(co) <- tpr_vector
+        colnames(co) <- ppr_vector
+    }
+    co
 }
+
 
 combineCorrWithSK <- function(sk_df, co_df) {
     # combine correlation tidy DF with Standing-Katz tidy DF
@@ -58,19 +73,13 @@ combineCorrWithSK <- function(sk_df, co_df) {
 #' ppr <- c(0.5, 1.5, 2.5, 3.5)
 #' tpr <- c(1.05, 1.1, 1.2)
 #' createTidyFromMatrix(ppr, tpr, correlation = "DAK")
+#' createTidyFromMatrix(ppr, tpr, correlation = "BB")
 createTidyFromMatrix <- function(ppr_vector, tpr_vector, correlation) {
-    valid_choices <- c("BB", "HY", "DAK", "DPR", "SH", "N10")
-    msg_missing <- "You have to provide a z-factor correlation: 'BB' or
-    'HY' or 'DAK' or 'DPR'."
-    if (missing(correlation)) stop(msg_missing)
-    if (!correlation %in% valid_choices) stop("Not a valid correlation.")
+    isMissing_correlation(correlation)
+    if (!isValid_correlation(correlation)) stop("Not a valid correlation.")
 
-    if (correlation == "BB")  zFunction <- z.BeggsBrill
-    if (correlation == "HY")  zFunction <- z.HallYarborough
-    if (correlation == "DAK") zFunction <- z.DranchukAbuKassem
-    if (correlation == "DPR") zFunction <- z.DranchukPurvisRobinson
-    if (correlation == "SH")  zFunction <- z.Shell
-    if (correlation == "N10") zFunction <- z.Ann10
+    zFunction <- get(z_correlations[which(z_correlations["short"] == correlation),
+                                    "function_name"])
 
     sk_matrix <- getStandingKatzMatrix(ppr_vector, tpr_vector,
                                        pprRange = "lp")
@@ -85,13 +94,71 @@ createTidyFromMatrix <- function(ppr_vector, tpr_vector, correlation) {
 }
 
 
+isMissing_correlation <- function(correlation) {
+    # stops if correlation argument is missing
+    msg_missing <- paste("You have to provide a z-factor correlation: ",
+                         paste(get_z_correlations(), collapse = " "))
+    if (missing(correlation)) stop(msg_missing)
+    else NULL
+}
+
+
+#' Check if supplied correlation (three letter) is valid
+#'
+#' @param correlation a z-factor correlation
+#' @export
+isValid_correlation <- function(correlation) {
+    # check if supplied correlation is valid
+    valid_choices <- z_correlations[["short"]]      # get vector of correlations
+    ifelse(correlation %in% valid_choices, TRUE, FALSE)
+}
+
+
+#' Get correlation information
+#'
+#' @param how short: abbreviations; long: description; function: the name of the
+#' correlation function
+#' @export
+#' @rdname get_z_correlations
+#' @examples
+#' # get the short name for the correlation
+#' get_z_correlations(how = "short")
+#'
+#' # get the description for the correlation
+#' get_z_correlations(how = "long")
+#'
+#' # get the name of the function assgined to the correlation
+#' get_z_correlations(how = "function")
+get_z_correlations <- function(how = "short") {
+    # get correlation information. short: abbreviations; long: description
+    #     function: the name of the correlation function
+    if (how == "short")
+        return(z_correlations[["short"]])
+    if (how == "long")
+        return(z_correlations[["long"]])
+    if (how == "function")
+        return(z_correlations[["function_name"]])
+    else stop("wrong keyword")
+}
+
+
+
 #' Plot multiple Tpr curves in one figure
+#'
+#' Plot will show the digitized isotherm of the Standing-Katz chart
 #'
 #' @param tpr Pseudo-reduced temperature curve in SK chart
 #' @param pprRange Takes one of two values: "lp": low pressure, or "hp" for
 #' @param ... additional parameters
+#' @rdname multiplotStandingKatz
 #' @importFrom ggplot2 ggplot aes geom_line geom_point
 #' @export
+#' @examples
+#' # plot Standing-Katz curves for Tpr=1.1 and 2.0
+#' multiplotStandingKatz(c(1.1, 2))
+#'
+#' # plot SK curves for the lowest range of Tpr
+#' multiplotStandingKatz(c(1.05, 1.1, 1.2))
 multiplotStandingKatz <- function(tpr, pprRange = "lp", ...) {
     Ppr <- NULL; z <- NULL; Tpr <- NULL
     tpr_li <- getStandingKatzData(tpr, pprRange = pprRange)

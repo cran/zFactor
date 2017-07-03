@@ -12,26 +12,32 @@
 #' @rdname Dranchuk-Purvis-Robinson
 #' @export
 #' @examples
-#' # calculate for one Tpr curve at a Ppr
+#' ## calculate for one Tpr curve at a Ppr
 #' z.DranchukPurvisRobinson(pres.pr = 1.5, temp.pr = 2.0)
 #'
-#' # For vectors of Ppr and Tpr:
+#' ## For vectors of Ppr and Tpr:
 #' ppr <- c(0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5)
 #' tpr <- c(1.3, 1.5, 1.7, 2)
-#' dpr <- z.DranchukPurvisRobinson(pres.pr = ppr, temp.pr = tpr)
-#' print(dpr)
+#' z.DranchukPurvisRobinson(pres.pr = ppr, temp.pr = tpr)
+#'
+#' ## create a matrix of z values
+#' tpr2 <- c(1.05, 1.1, 1.2, 1.3)
+#' ppr2 <- c(0.5, 1.0, 1.5, 2, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5)
+#' sk_corr_2 <- createTidyFromMatrix(ppr2, tpr2, correlation = "DPR")
+#' tibble::as.tibble(sk_corr_2)
 z.DranchukPurvisRobinson <- function(pres.pr, temp.pr, tolerance = 1E-13,
                                      verbose = FALSE) {
 
-    dpr <- sapply(pres.pr, function(x)
+    co <- sapply(pres.pr, function(x)
         sapply(temp.pr, function(y)
             .z.DranchukPurvisRobinson(pres.pr = x, temp.pr = y,
                                       tolerance = tolerance, verbose = verbose)))
     if (length(pres.pr) > 1 || length(temp.pr) > 1) {
-        rownames(dpr) <- temp.pr
-        colnames(dpr) <- pres.pr
+        co <- matrix(co, nrow = length(temp.pr), ncol = length(pres.pr))
+        rownames(co) <- temp.pr
+        colnames(co) <- pres.pr
     }
-    return(dpr)
+    return(co)
 }
 
 

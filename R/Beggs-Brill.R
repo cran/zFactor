@@ -11,17 +11,26 @@
 #' @param verbose print internal
 #' @rdname Beggs-Brill
 #' @export
-#' @export
-z.BeggsBrill <- function(pres.pr, temp.pr, tolerance = 1e-13, verbose = FALSE) {
-    bb <- sapply(pres.pr, function(x)
+#' @examples
+#' ## one single z calculation
+#' z.BeggsBrill(pres.pr = 1.5, temp.pr = 2.0)
+#' ## calculate z for multiple values of Tpr and Ppr
+#' ppr <- c(0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5)
+#' tpr <- c(1.3, 1.5, 1.7, 2)
+#' z.BeggsBrill(pres.pr = ppr, temp.pr = tpr)
+z.BeggsBrill <- function(pres.pr, temp.pr,
+                         tolerance = 1e-13, verbose = FALSE) {
+
+    co <- sapply(pres.pr, function(x)
         sapply(temp.pr, function(y)
             .z.BeggsBrill(pres.pr = x, temp.pr = y,
                                       tolerance = tolerance, verbose = verbose)))
     if (length(pres.pr) > 1 || length(temp.pr) > 1) {
-        rownames(bb) <- temp.pr
-        colnames(bb) <- pres.pr
+        co <- matrix(co, nrow = length(temp.pr), ncol = length(pres.pr))
+        rownames(co) <- temp.pr
+        colnames(co) <- pres.pr
     }
-    return(bb)
+    return(co)
 }
 
 

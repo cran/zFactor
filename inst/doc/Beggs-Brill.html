@@ -12,7 +12,7 @@
 
 <meta name="author" content="Vignette Author" />
 
-<meta name="date" content="2017-06-28" />
+<meta name="date" content="2017-07-03" />
 
 <title>Beggs-Brill correlation</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Beggs-Brill correlation</h1>
 <h4 class="author"><em>Vignette Author</em></h4>
-<h4 class="date"><em>2017-06-28</em></h4>
+<h4 class="date"><em>2017-07-03</em></h4>
 
 
 
@@ -295,8 +295,9 @@ p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(sk_corr_2, <span 
 <span class="kw">library</span>(tibble)
 
 <span class="co"># get all `lp` Tpr curves</span>
-tpr_all &lt;-<span class="st"> </span><span class="kw">getCurvesDigitized</span>(<span class="dt">pprRange =</span> <span class="st">&quot;lp&quot;</span>)
-ppr &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="fl">2.5</span>, <span class="fl">3.5</span>, <span class="fl">4.5</span>, <span class="fl">5.5</span>, <span class="fl">6.5</span>) 
+tpr_all &lt;-<span class="st"> </span><span class="kw">getCurvesDigitized</span>(<span class="dt">pprRange =</span> <span class="st">&quot;lp&quot;</span>)</code></pre></div>
+<pre><code>Error in getCurvesDigitized(pprRange = &quot;lp&quot;): could not find function &quot;getCurvesDigitized&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ppr &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="fl">2.5</span>, <span class="fl">3.5</span>, <span class="fl">4.5</span>, <span class="fl">5.5</span>, <span class="fl">6.5</span>) 
 
 sk_corr_all &lt;-<span class="st"> </span><span class="kw">createTidyFromMatrix</span>(ppr, tpr_all, <span class="dt">correlation =</span> <span class="st">&quot;BB&quot;</span>)
 <span class="kw">as.tibble</span>(sk_corr_all)
@@ -371,8 +372,9 @@ smry_tpr_ppr &lt;-<span class="st"> </span><span class="kw">summarise</span>(gro
 <div id="looking-numerically-at-the-errors-in-bb-vs-sk-chart" class="section level2">
 <h2>Looking numerically at the errors in <code>BB</code> vs <code>SK</code> chart</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># get all `lp` Tpr curves</span>
-tpr &lt;-<span class="st"> </span><span class="kw">getCurvesDigitized</span>(<span class="dt">pprRange =</span> <span class="st">&quot;lp&quot;</span>)
-ppr &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="fl">2.5</span>, <span class="fl">3.5</span>, <span class="fl">4.5</span>, <span class="fl">5.5</span>, <span class="fl">6.5</span>) 
+tpr &lt;-<span class="st"> </span><span class="kw">getCurvesDigitized</span>(<span class="dt">pprRange =</span> <span class="st">&quot;lp&quot;</span>)</code></pre></div>
+<pre><code>Error in getCurvesDigitized(pprRange = &quot;lp&quot;): could not find function &quot;getCurvesDigitized&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ppr &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="fl">2.5</span>, <span class="fl">3.5</span>, <span class="fl">4.5</span>, <span class="fl">5.5</span>, <span class="fl">6.5</span>) 
 
 <span class="co"># calculate HY for the given Tpr</span>
 all_corr &lt;-<span class="st"> </span><span class="kw">z.BeggsBrill</span>(<span class="dt">pres.pr =</span> ppr, <span class="dt">temp.pr =</span> tpr)
@@ -395,124 +397,50 @@ all_err
 <span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st"> Errors for the transposed matrix: Tpr </span><span class="ch">\n</span><span class="st">&quot;</span>)
 <span class="kw">summary</span>(<span class="kw">t</span>(all_err))</code></pre></div>
 <pre><code>Calculated from the correlation 
-           0.5       1.5       2.5       3.5        4.5        5.5
-1.05 0.8325491 0.2851494 0.3333796 0.4569204  0.5802310  0.7033638
-1.1  0.8639321 0.4631501 0.3848774 0.4993213  0.6131885  0.7266084
-1.2  0.9026461 0.6758659 0.4977865 0.5605500  0.6589953  0.7567099
-1.3  0.9266436 0.7675523 0.6526911 0.6234648  0.6921991  0.7779095
-1.4  0.9432988 0.8224273 0.7388187 0.7103492  0.7343367  0.7966791
-1.5  0.9555248 0.8618306 0.7945385 0.7691830  0.7828753  0.8248905
-1.6  0.9647818 0.8920527 0.8376331 0.8139976  0.8214333  0.8532880
-1.7  0.9719193 0.9159219 0.8728791 0.8521620  0.8556641  0.8800665
-1.8  0.9774854 0.9350585 0.9022222 0.8855750  0.8874829  0.9067399
-1.9  0.9818623 0.9504907 0.9267646 0.9149047  0.9171073  0.9333359
-2    0.9853337 0.9629020 0.9471826 0.9404180  0.9443010  0.9593080
-2.2  0.9904020 0.9803535 0.9768810 0.9795480  0.9887829  1.0049837
-2.4  0.9940266 0.9894204 0.9909094 0.9974289  1.0086828  1.0246183
-2.6  0.9971532 0.9902007 0.9817596 0.9719460  0.9608415  0.9485126
-2.8  1.0004100 0.9802574 0.9222416 0.8188474  0.6645377  0.4548462
-3    1.0040392 0.9514557 0.7082371 0.1399229 -0.8897010 -2.5178952
-            6.5
-1.05  0.8263519
-1.1   0.8396647
-1.2   0.8538299
-1.3   0.8630653
-1.4   0.8717561
-1.5   0.8837555
-1.6   0.9011787
-1.7   0.9198223
-1.8   0.9400764
-1.9   0.9619430
-2     0.9848256
-2.2   1.0282971
-2.4   1.0452638
-2.6   0.9350177
-2.8   0.1860147
-3    -4.8825128
+          0.5       1.5       2.5       3.5       4.5       5.5       6.5
+1.3 0.9266436 0.7675523 0.6526911 0.6234648 0.6921991 0.7779095 0.8630653
+1.5 0.9555248 0.8618306 0.7945385 0.7691830 0.7828753 0.8248905 0.8837555
+1.7 0.9719193 0.9159219 0.8728791 0.8521620 0.8556641 0.8800665 0.9198223
+2   0.9853337 0.9629020 0.9471826 0.9404180 0.9443010 0.9593080 0.9848256
 
 Standing-Katz chart
        0.5   1.5   2.5   3.5   4.5   5.5   6.5
-1.05 0.829 0.253 0.343 0.471 0.598 0.727 0.846
-1.10 0.854 0.426 0.393 0.500 0.615 0.729 0.841
-1.20 0.893 0.657 0.519 0.565 0.650 0.741 0.841
 1.30 0.916 0.756 0.638 0.633 0.684 0.759 0.844
-1.40 0.936 0.816 0.727 0.705 0.734 0.792 0.865
 1.50 0.948 0.859 0.794 0.770 0.790 0.836 0.892
-1.60 0.959 0.888 0.839 0.816 0.829 0.868 0.918
 1.70 0.968 0.914 0.876 0.857 0.864 0.897 0.942
-1.80 0.974 0.933 0.905 0.891 0.901 0.929 0.967
-1.90 0.978 0.945 0.924 0.916 0.924 0.949 0.985
 2.00 0.982 0.956 0.941 0.937 0.945 0.969 1.003
-2.20 0.989 0.973 0.963 0.963 0.976 1.000 1.029
-2.40 0.993 0.984 0.980 0.983 0.999 1.023 1.049
-2.60 0.997 0.994 0.994 1.000 1.016 1.038 1.062
-2.80 0.999 1.002 1.008 1.016 1.030 1.049 1.069
-3.00 1.002 1.009 1.018 1.029 1.041 1.056 1.075
 
  Errors in percentage 
-       0.5    1.5   2.5   3.5    4.5    5.5    6.5
-1.05 -0.43 -12.71  2.80  2.99   2.97   3.25   2.32
-1.10 -1.16  -8.72  2.07  0.14   0.29   0.33   0.16
-1.20 -1.08  -2.87  4.09  0.79  -1.38  -2.12  -1.53
-1.30 -1.16  -1.53 -2.30  1.51  -1.20  -2.49  -2.26
-1.40 -0.78  -0.79 -1.63 -0.76  -0.05  -0.59  -0.78
-1.50 -0.79  -0.33 -0.07  0.11   0.90   1.33   0.92
-1.60 -0.60  -0.46  0.16  0.25   0.91   1.69   1.83
-1.70 -0.40  -0.21  0.36  0.56   0.96   1.89   2.35
-1.80 -0.36  -0.22  0.31  0.61   1.50   2.40   2.78
-1.90 -0.39  -0.58 -0.30  0.12   0.75   1.65   2.34
-2.00 -0.34  -0.72 -0.66 -0.36   0.07   1.00   1.81
-2.20 -0.14  -0.76 -1.44 -1.72  -1.31  -0.50   0.07
-2.40 -0.10  -0.55 -1.11 -1.47  -0.97  -0.16   0.36
-2.60 -0.02   0.38  1.23  2.81   5.43   8.62  11.96
-2.80 -0.14   2.17  8.51 19.40  35.48  56.64  82.60
-3.00 -0.20   5.70 30.43 86.40 185.47 338.44 554.19
+       0.5   1.5   2.5   3.5   4.5   5.5   6.5
+1.30 -1.16 -1.53 -2.30  1.51 -1.20 -2.49 -2.26
+1.50 -0.79 -0.33 -0.07  0.11  0.90  1.33  0.92
+1.70 -0.40 -0.21  0.36  0.56  0.96  1.89  2.35
+2.00 -0.34 -0.72 -0.66 -0.36  0.07  1.00  1.81
 
  Errors in Ppr
-      0.5               1.5                2.5               3.5         
- Min.   :-1.1600   Min.   :-12.7100   Min.   :-2.3000   Min.   :-1.7200  
- 1st Qu.:-0.7825   1st Qu.: -0.9750   1st Qu.:-0.7725   1st Qu.:-0.0075  
- Median :-0.3950   Median : -0.5650   Median : 0.2350   Median : 0.4050  
- Mean   :-0.5056   Mean   : -1.3875   Mean   : 2.6531   Mean   : 6.9612  
- 3rd Qu.:-0.1850   3rd Qu.: -0.2175   3rd Qu.: 2.2525   3rd Qu.: 1.8350  
- Max.   :-0.0200   Max.   :  5.7000   Max.   :30.4300   Max.   :86.4000  
-      4.5               5.5               6.5          
- Min.   : -1.380   Min.   : -2.490   Min.   : -2.2600  
- 1st Qu.: -0.280   1st Qu.: -0.245   1st Qu.:  0.1375  
- Median :  0.825   Median :  1.490   Median :  1.8200  
- Mean   : 14.364   Mean   : 25.711   Mean   : 41.1950  
- 3rd Qu.:  1.867   3rd Qu.:  2.612   3rd Qu.:  2.4575  
- Max.   :185.470   Max.   :338.440   Max.   :554.1900  
+      0.5               1.5               2.5               3.5         
+ Min.   :-1.1600   Min.   :-1.5300   Min.   :-2.3000   Min.   :-0.3600  
+ 1st Qu.:-0.8825   1st Qu.:-0.9225   1st Qu.:-1.0700   1st Qu.:-0.0075  
+ Median :-0.5950   Median :-0.5250   Median :-0.3650   Median : 0.3350  
+ Mean   :-0.6725   Mean   :-0.6975   Mean   :-0.6675   Mean   : 0.4550  
+ 3rd Qu.:-0.3850   3rd Qu.:-0.3000   3rd Qu.: 0.0375   3rd Qu.: 0.7975  
+ Max.   :-0.3400   Max.   :-0.2100   Max.   : 0.3600   Max.   : 1.5100  
+      4.5               5.5               6.5        
+ Min.   :-1.2000   Min.   :-2.4900   Min.   :-2.260  
+ 1st Qu.:-0.2475   1st Qu.: 0.1275   1st Qu.: 0.125  
+ Median : 0.4850   Median : 1.1650   Median : 1.365  
+ Mean   : 0.1825   Mean   : 0.4325   Mean   : 0.705  
+ 3rd Qu.: 0.9150   3rd Qu.: 1.4700   3rd Qu.: 1.945  
+ Max.   : 0.9600   Max.   : 1.8900   Max.   : 2.350  
 
  Errors for the transposed matrix: Tpr 
-      1.05              1.10              1.20              1.30       
- Min.   :-12.710   Min.   :-8.7200   Min.   :-2.8700   Min.   :-2.490  
- 1st Qu.:  0.945   1st Qu.:-0.5100   1st Qu.:-1.8250   1st Qu.:-2.280  
- Median :  2.800   Median : 0.1600   Median :-1.3800   Median :-1.530  
- Mean   :  0.170   Mean   :-0.9843   Mean   :-0.5857   Mean   :-1.347  
- 3rd Qu.:  2.980   3rd Qu.: 0.3100   3rd Qu.:-0.1450   3rd Qu.:-1.180  
- Max.   :  3.250   Max.   : 2.0700   Max.   : 4.0900   Max.   : 1.510  
-      1.40              1.50              1.60            1.70        
- Min.   :-1.6300   Min.   :-0.7900   Min.   :-0.60   Min.   :-0.4000  
- 1st Qu.:-0.7850   1st Qu.:-0.2000   1st Qu.:-0.15   1st Qu.: 0.0750  
- Median :-0.7800   Median : 0.1100   Median : 0.25   Median : 0.5600  
- Mean   :-0.7686   Mean   : 0.2957   Mean   : 0.54   Mean   : 0.7871  
- 3rd Qu.:-0.6750   3rd Qu.: 0.9100   3rd Qu.: 1.30   3rd Qu.: 1.4250  
- Max.   :-0.0500   Max.   : 1.3300   Max.   : 1.83   Max.   : 2.3500  
-      1.80             1.90              2.00              2.20        
- Min.   :-0.360   Min.   :-0.5800   Min.   :-0.7200   Min.   :-1.7200  
- 1st Qu.: 0.045   1st Qu.:-0.3450   1st Qu.:-0.5100   1st Qu.:-1.3750  
- Median : 0.610   Median : 0.1200   Median :-0.3400   Median :-0.7600  
- Mean   : 1.003   Mean   : 0.5129   Mean   : 0.1143   Mean   :-0.8286  
- 3rd Qu.: 1.950   3rd Qu.: 1.2000   3rd Qu.: 0.5350   3rd Qu.:-0.3200  
- Max.   : 2.780   Max.   : 2.3400   Max.   : 1.8100   Max.   : 0.0700  
-      2.40              2.60             2.80            3.00       
- Min.   :-1.4700   Min.   :-0.020   Min.   :-0.14   Min.   : -0.20  
- 1st Qu.:-1.0400   1st Qu.: 0.805   1st Qu.: 5.34   1st Qu.: 18.07  
- Median :-0.5500   Median : 2.810   Median :19.40   Median : 86.40  
- Mean   :-0.5714   Mean   : 4.344   Mean   :29.24   Mean   :171.49  
- 3rd Qu.:-0.1300   3rd Qu.: 7.025   3rd Qu.:46.06   3rd Qu.:261.95  
- Max.   : 0.3600   Max.   :11.960   Max.   :82.60   Max.   :554.19  </code></pre>
+      1.30             1.50              1.70              2.00        
+ Min.   :-2.490   Min.   :-0.7900   Min.   :-0.4000   Min.   :-0.7200  
+ 1st Qu.:-2.280   1st Qu.:-0.2000   1st Qu.: 0.0750   1st Qu.:-0.5100  
+ Median :-1.530   Median : 0.1100   Median : 0.5600   Median :-0.3400  
+ Mean   :-1.347   Mean   : 0.2957   Mean   : 0.7871   Mean   : 0.1143  
+ 3rd Qu.:-1.180   3rd Qu.: 0.9100   3rd Qu.: 1.4250   3rd Qu.: 0.5350  
+ Max.   : 1.510   Max.   : 1.3300   Max.   : 2.3500   Max.   : 1.8100  </code></pre>
 </div>
 
 
