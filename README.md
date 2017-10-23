@@ -1,20 +1,20 @@
 
-[![Rdoc](http://www.rdocumentation.org/badges/version/zFactor)](http://www.rdocumentation.org/packages/zFactor)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/zFactor)](https://cran.r-project.org/package=zFactor) [![Travis-CI Build Status](https://travis-ci.org/f0nzie/zFactor.svg?branch=master)](https://travis-ci.org/f0nzie/zFactor) [![codecov](https://codecov.io/gh/f0nzie/zFactor/branch/master/graph/badge.svg)](https://codecov.io/gh/f0nzie/zFactor)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 zFactor
 =======
 
-Computational tools for chemical, petrochemical and petroleum engineers. Calculates the deviation between different correlations for gas compressibility compared to the Standing-Katz chart.
+Computational tools for chemical, petrochemical and petroleum engineers. Calculates the deviation between different correlations for gas compressibility compared to the original Standing-Katz chart.
 
 Motivation
 ----------
 
-For the development of vertical lift performance (VLP) curves and other petroleum engineering calculations, it is necessary to calculate properties of hydrocarbons in mixtures, liquid and gaseous phases. Compressibility is one of these hydrocarbon properties. It is important to count with the apropriate correlation and know its range of applicability in order to calculate other properties dependant of `z`.
+For the development of vertical lift performance (VLP) curves and other petroleum engineering calculations, it is necessary to calculate properties of hydrocarbons in mixtures, liquid and gaseous phases. **Compressibility** is one of these hydrocarbon properties. It is important to count with the apropriate correlation and know its range of applicability in order to calculate other properties dependant of `z`.
 
-There are several compressibility correlations. In this package, few of them, or the most used are being evaluated. There has been extensive studies on compressibility correlations. This evaluation is different in the sense that provides a graphical view of the range of applicability as well statistical measures of the errors.
+There are several compressibility correlations. In this package, few of them, or the most used in the industry, are being evaluated. There have been extensive studies on compressibility correlations. This evaluation is different in the sense that provides a graphical view of the range of applicability as well statistical measures of the errors, besides that the work has been written fully in `R` providing the analysis and results for peer review and reproducibility purposes. All the code, functions, notes, datasets are available via GitHub.
 
-This analysis focus on sweet hydrocarbon gases. Compressibility correlations for sour gases are little bit more complicated since they show significant deviations from the curves in the Standing-Katz charts. Effects of CO2, H2S and N2 have to be accounted for. In a future release of `zFactor` correlations for sour hydrocarbons gases will possibly be covered.
+This analysis focus on sweet hydrocarbon gases. Compressibility correlations for sour gases are little bit more complicated since they show significant deviations from the curves in the Standing-Katz charts. Effects of CO2, H2S and N2 have to be accounted for. In a future release of `zFactor` correlations for *sour hydrocarbons gases* will possibly be covered.
 
 Correlations used in this study
 -------------------------------
@@ -33,12 +33,20 @@ The correlations that are implemented in R for the package **zFactor** are:
 
 -   A correlation developed with Artificial Neural Networks (Ann10) by Kamyab et al. `(Kamyab, Sampaio, Qanbari, and Eustes, 2010)`
 
+-   An explicit correlation by *I. Papp* `(Papp, 1979)` mentioned in the comparative analysis paper by Gabor Takacs `(Takacs, 1989)`. Not available in English.
+
+Versions
+--------
+
+-   In CRAN: `v 0.1.7`
+-   In GitHub `development versions`
+
 Installation
 ------------
 
-I recommend installing from GitHub using devtools, that way you get the latest and greatest version. CRAN release cycles allows updates every one to two months.
+I recommend installing from GitHub using `devtools`, that way you get the latest and greatest version. CRAN release cycles allows updates every one to two months.
 
-You can install the latest version of `zFactor` from github with:
+You can install the latest version of `zFactor` from GitHub with:
 
 ``` r
 # install.packages("devtools")
@@ -107,6 +115,15 @@ z.Shell(ppr, tpr)
 #> 1.7 0.9711067 0.9150837 0.8740757 0.8563697 0.8629757 0.8901157 0.9321262
 #> 1.8 0.9794808 0.9395295 0.9097288 0.8964473 0.9015059 0.9233190 0.9584750
 
+# the newly added Papp correlation
+z.Papp(ppr, tpr)
+#>           0.5       1.5       2.5       3.5       4.5       5.5       6.5
+#> 1.4 0.9408336 0.8010648 0.7076525 0.6906870 0.7299354 0.7958370 0.8705316
+#> 1.4 0.9408336 0.8010648 0.7076525 0.6906870 0.7299354 0.7958370 0.8705316
+#> 1.6 0.9657774 0.8864710 0.8252564 0.8026787 0.8182983 0.8604984 0.9168234
+#> 1.7 0.9736623 0.9138939 0.8665932 0.8471834 0.8578133 0.8919610 0.9406180
+#> 1.8 0.9796287 0.9345928 0.8988524 0.8837788 0.8922563 0.9208289 0.9632719
+
 # and finally the correlation Kamyab et al that uses Artificial Neural Networks
 z.Ann10(ppr, tpr)
 #>           0.5       1.5       2.5       3.5       4.5       5.5       6.5
@@ -120,7 +137,7 @@ z.Ann10(ppr, tpr)
 Range of Applicability
 ----------------------
 
-How to interpret the colors? We use the Mean Absolute Percentage Error or `MAPE` to visualize how close the correlation follow the experimental values of the Standing-Katz chart.
+How to interpret the colors? We use the [Mean Absolute Percentage Error](https://en.wikipedia.org/wiki/Mean_absolute_percentage_error) or `MAPE` to visualize how close the correlation follow the experimental values of the Standing-Katz chart.
 
 -   `Blue`: the MAPE is zero or near zero
 -   `Yellow`: the MAPE is around 10 percent.
@@ -129,49 +146,68 @@ How to interpret the colors? We use the Mean Absolute Percentage Error or `MAPE`
 
 You can see for yourself which correlation is more stable at different ranges of pseudo-reduce pressures and temperatures.
 
+#### Beggs-Brill
+
 ``` r
 library(zFactor)
 zFactor:::z.plot.range("BB",  interval = "fine")
-#> Warning: package 'bindrcpp' was built under R version 3.4.1
 ```
 
 ![](man/figures/README-unnamed-chunk-5-1.png)
+
+#### Hall-Yarborough
 
 ``` r
 zFactor:::z.plot.range("HY",  interval = "fine")
 ```
 
-![](man/figures/README-unnamed-chunk-5-2.png)
+![](man/figures/README-unnamed-chunk-6-1.png)
 
 ``` r
 zFactor:::z.plot.range("HY",  interval = "coarse")
 ```
 
-![](man/figures/README-unnamed-chunk-5-3.png)
+![](man/figures/README-unnamed-chunk-6-2.png)
+
+#### Dranchuk-AbouKassem
 
 ``` r
 zFactor:::z.plot.range("DAK", interval = "fine")
 ```
 
-![](man/figures/README-unnamed-chunk-5-4.png)
+![](man/figures/README-unnamed-chunk-7-1.png)
+
+#### Dranchuk-Purvis-Robinson
 
 ``` r
 zFactor:::z.plot.range("DPR", interval = "fine")
 ```
 
-![](man/figures/README-unnamed-chunk-5-5.png)
+![](man/figures/README-unnamed-chunk-8-1.png)
+
+#### Shell (Shell Oil Company)
 
 ``` r
 zFactor:::z.plot.range("SH",  interval = "fine")
 ```
 
-![](man/figures/README-unnamed-chunk-5-6.png)
+![](man/figures/README-unnamed-chunk-9-1.png)
+
+#### Ann10 (Neural Network, 10 neurons)
 
 ``` r
 zFactor:::z.plot.range("N10", interval = "fine")
 ```
 
-![](man/figures/README-unnamed-chunk-5-7.png)
+![](man/figures/README-unnamed-chunk-10-1.png)
+
+#### Papp (explicit)
+
+``` r
+zFactor:::z.plot.range("PP",  interval = "fine")
+```
+
+![](man/figures/README-unnamed-chunk-11-1.png)
 
 Comparative Analysis
 --------------------
@@ -179,7 +215,7 @@ Comparative Analysis
 The comparative analysis shows tables with different error measurements:
 
     MSE:   Mean Squared Error
-    RMSE:  Root Mean Sqyared Error
+    RMSE:  Root Mean Squared Error
     RSS:   Residual sum of Squares
     RMSLE: Root Mean Squared Logarithmic Error. Penalizes understimation.
     MAPE:  Mean Absolute Percentage Error = AARE
@@ -191,12 +227,13 @@ What you can do with `zFactor`
 
 -   Find `z` with any of the correlations provided
 -   Get values from the Standing-Katz chart at any of the isotherms limited by the pseudo-reduced pressures (`Ppr`) digitized
--   Find what isotherms or pseudo-reduced temperatures (`Tpr`) are available from Standing and Katz chart
+-   Find what isotherms or pseudo-reduced temperatures (`Tpr`) are available from the Standing and Katz chart
 -   Find what pseudo-reduced pressure points are available
 -   Plot any of the Standing-Katz isotherms to view `z` in graphical form
--   Plot a tile chart to show the range of applicability of the correlations
+-   Plot a tile chart to show the range of applicability of the correlations. In essence, get an idea of the accuracy by the location of the desired point at Tpr and Ppr
 -   Get a statistics table when comparing any of the correlations to the Standing-Katz chart
--   Get a matrix of \``z` values calculated from any correlation where the rows are the pseudo-reduced temperatures and the columns the pseudo-reduced pressures
+-   Get a matrix of `z` values calculated from any correlation where the rows are the pseudo-reduced temperatures and the columns the pseudo-reduced pressures
+-   Plot one or multiple isotherms
 
 ### Plotting a specific isotherm of SK chart
 
@@ -205,13 +242,13 @@ library(zFactor)
 getStandingKatzCurve(tpr = 1.3, toView = FALSE, toSave = FALSE)
 ```
 
-![](man/figures/README-unnamed-chunk-6-1.png)
+![](man/figures/README-unnamed-chunk-12-1.png)
 
 ``` r
 getStandingKatzCurve(tpr = 1.05, pprRange = "lp", toView = FALSE, toSave = FALSE)
 ```
 
-![](man/figures/README-unnamed-chunk-6-2.png)
+![](man/figures/README-unnamed-chunk-12-2.png)
 
 ### Ploting all the `Tpr` curves of Standing-Katz chart using `lapply`, `getStandingKatzData` and `data.table::rbindlist`:
 
@@ -232,7 +269,7 @@ ggplot(all_tpr_df, aes(x=Ppr, y=z, group=Tpr, color=Tpr)) +
     geom_point()
 ```
 
-![](man/figures/README-unnamed-chunk-7-1.png)
+![](man/figures/README-unnamed-chunk-13-1.png)
 
 ### Build a table of statistical errors between a correlation and SK chart
 
@@ -240,20 +277,8 @@ ggplot(all_tpr_df, aes(x=Ppr, y=z, group=Tpr, color=Tpr)) +
 library(ggplot2)
 library(tibble)
 library(dplyr)
-#> Warning: package 'dplyr' was built under R version 3.4.1
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:data.table':
-#> 
-#>     between, first, last
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
 
-# get all `lp` Tpr curves
+# get all Tpr curves at low pressure (lp)
 tpr_all <- getStandingKatzTpr(pprRange = "lp")
 ppr <- c(0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5) 
 sk_corr_all <- createTidyFromMatrix(ppr, tpr_all, correlation = "DPR")
@@ -287,6 +312,28 @@ as.tibble(smry_tpr_ppr)
 #> #   RMLSE <dbl>
 ```
 
+Summary of MAPE statistics
+--------------------------
+
+This function shows a statistical summary of the Mean Absolute Percentage Error of all the correlations. We are taking the mean, maximum error, minimum eroor, the median and the mode in the whole range of each opf the correlations.
+
+``` r
+library(zFactor)
+stats_of_z.stats()
+#>                 BB           HY          DAK         DPR         SH
+#> mean    13.8862628  0.818657798  0.769721132  0.81237862  4.1530402
+#> max    554.1872335 22.481448009 12.777908779 12.96594664 30.3942954
+#> min      0.0153618  0.002422012  0.000609287  0.02057809  0.0231023
+#> median   1.0402029  0.220154744  0.245336341  0.26714131  1.1092930
+#> Mode     0.4281138  0.418077023  0.128870880  0.11769033  0.4389189
+#>                N10           PP
+#> mean   0.163515716  2.098729377
+#> max    1.153159851 85.482666496
+#> min    0.007209524  0.000507908
+#> median 0.123437923  0.670820910
+#> Mode   0.419773370  0.559623816
+```
+
 Vignettes
 ---------
 
@@ -299,11 +346,12 @@ The vignettes contain examples on the use and analysis of the various correlatio
 -   Dranchuk-Purvis-Robinson.Rmd
 -   shell.Rmd
 -   ANN.Rmd
+-   Papp.Rmd
 
 Tests
 -----
 
-There are tests for the correlations under tests/testthat.
+There are unit tests for the correlations under tests/testthat.
 
 How the Standing-Katz chart was constructed
 -------------------------------------------
@@ -337,4 +385,8 @@ The following books and papers were consulted during the development of this pac
 
 \[10\] M. Mohamadi-Baghmolaei, R. Azin, S. Osfouri, et al. "Prediction of gas compressibility factor using intelligent models". In: *Natural Gas Industry B* 2.4 (2015), pp. 283-294. DOI: 10.1016/j.ngib.2015.09.001. &lt;URL: <http://doi.org/10.1016/j.ngib.2015.09.001>&gt;.
 
-\[11\] S. Rakap, S. Rakap, D. Evran, et al. "Comparative evaluation of the reliability and validity of three data extraction programs: UnGraph, GraphClick, and DigitizeIt". In: *Computers in Human Behavior* 55 (2016), pp. 159-166. DOI: 10.1016/j.chb.2015.09.008. &lt;URL: <http://doi.org/10.1016/j.chb.2015.09.008>&gt;.
+\[11\] I. Papp. "Uj modszer foldgazok elteresi tenyezojenek szamitasara". In: *Koolaj es Foldgaz* (Nov. 1979), pp. 345-47.
+
+\[12\] S. Rakap, S. Rakap, D. Evran, et al. "Comparative evaluation of the reliability and validity of three data extraction programs: UnGraph, GraphClick, and DigitizeIt". In: *Computers in Human Behavior* 55 (2016), pp. 159-166. DOI: 10.1016/j.chb.2015.09.008. &lt;URL: <http://doi.org/10.1016/j.chb.2015.09.008>&gt;.
+
+\[13\] G. Takacs. "Comparing Methods for Calculating z Factor". In: *Oil and Gas Journal* (May. 1989). DOI: NA. &lt;URL: <https://www.researchgate.net/publication/236510717_Comparing_methods_for_calculating_Z-factor>&gt;.

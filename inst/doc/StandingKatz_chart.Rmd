@@ -1,6 +1,5 @@
 ---
 title: "Standing-Katz chart data"
-author: "Vignette Author"
 date: '`r Sys.Date()`'
 output: rmarkdown::html_vignette
 
@@ -16,10 +15,9 @@ knitr::opts_chunk$set(echo=T, comment=NA, error=T, warning=F, message = F, fig.a
 
 
 ## How the data was collected
-
 The Standing-Katz (SK) chart data is read directly from a scanned figure of the original plot drawn by Standing and Katz in 1951. 
 
-The software used to digitize the data is `graphClick` for the operating system `osX` by Apple. This software has been tested and qualified by scolars working on a similar task of digitizing data. <paper citation here>
+The software used to digitize the data is `graphClick` for the operating system `osX` by Apple. This software has been tested and qualified by scholars working on a similar task of digitizing data. 
 
 Each one of the SK chart curves has been digitized. There are some curves where more points were taken due to the curvature. Other curves are almost linear and few points were necessary to define the curve.
 
@@ -31,7 +29,6 @@ We invoke the function `listStandingKatzCurves()` to list all the Standing-Katz 
 
 ```{r}
 library(zFactor)
-
 listStandingKatzCurves(pprRange = 'all')
 ```
 
@@ -43,11 +40,10 @@ Note that the files follow this convention:
     tpr: pseudo-reduced tempereture
     nnn: a three digit number representing the curve by the Tpr
     
-Now that we know the meaning of the name of digitized curve. we could only list then the files that contain data only in the 'high pressure' range:
+Now that we know the meaning of the name of digitized curve. we could only list then the files that contain data only in the 'high pressure' (hp) range:
 
 ```{r}
 library(zFactor)
-
 listStandingKatzCurves(pprRange = 'hp')
 ```
 
@@ -55,10 +51,8 @@ For the low-pressure `Ppr` range:
 
 ```{r}
 library(zFactor)
-
 listStandingKatzCurves(pprRange = 'lp')
 ```
-
 
 
 ## Reading and plotting the Standing-Katz chart data
@@ -87,6 +81,7 @@ library(zFactor)
 
 getStandingKatzCurve(tpr = 1.3, pprRange = 'hp', toView = FALSE, toSave = FALSE)
 ```
+
 
 We could change the `Y` scale of the plot to accomadate the high `z`` values:
 
@@ -130,7 +125,6 @@ library(zFactor)
 library(tibble)
 
 tpr <- c(1.05, 1.3, 1.5)
-
 tpr_li <- lapply(tpr, getStandingKatzData, pprRange = 'lp')
 names(tpr_li) <- tpr
 tibble(tpr_li)
@@ -173,7 +167,6 @@ getStandingKatzMatrix(ppr_vector = ppr_vec, tpr_vector = tpr_vec)
 ```
 
 
-
 > Note that these values are not interpolated; they are raw values read from the Standing-Katz chart.
 
 **NOTE** \
@@ -188,7 +181,6 @@ library(zFactor)
 
 tpr_vec <- c(1.05, 1.1, 1.2, 1.3)
 ppr_vec <- c(0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5)
-
 getStandingKatzMatrix(ppr_vector = ppr_vec, tpr_vector = tpr_vec)
 ```
 
@@ -199,13 +191,11 @@ library(zFactor)
 
 tpr_vec <- c(2.0, 2.2, 2.4, 2.6, 2.8, 3.0)
 ppr_vec <- c(0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.0)
-
 getStandingKatzMatrix(ppr_vector = ppr_vec, tpr_vector = tpr_vec)
 ```
 
 
 ## Smaller sample of `z`
-
 If a smaller sample is required, change the vectors:
 
 ```{r}
@@ -270,11 +260,10 @@ names(res_li) <- tpr_vec
 asked_tpr_str <- as.character(asked_tpr)
 df <- res_li[[asked_tpr_str]]
 df[which(res_li[[asked_tpr_str]]["Ppr_near"] == asked_ppr), "z"]
-
 ```
 
-## Concatenating `Tpr` tables
 
+## Concatenating `Tpr` tables
 
 ```{r}
 library(zFactor)
