@@ -46,9 +46,9 @@ names(tpr_li) <- tpr
 tibble(tpr_li)
 
 ## ------------------------------------------------------------------------
-as.tibble(tpr_li[["1.05"]])
-as.tibble(tpr_li[["1.3"]])
-as.tibble(tpr_li[["1.5"]])
+as_tibble(tpr_li[["1.05"]])
+as_tibble(tpr_li[["1.3"]])
+as_tibble(tpr_li[["1.5"]])
 
 ## ------------------------------------------------------------------------
 # show the first 10 rows

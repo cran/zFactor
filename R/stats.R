@@ -14,7 +14,7 @@
 #' @param correlation identifier. Can be "HY", "DAK", "DPR" "N10", "SH"
 #' @param pprRange low (lp) or high (hp) chart area of the Standing-Katz chart
 #' @param interval quality of the Ppr scale. Coarse: every 1.0; Fine: every 0.5
-#' @importFrom dplyr group_by summarise
+#' @importFrom dplyr group_by summarise n
 #' @rdname z.stats
 #' @export
 #' @examples
@@ -41,7 +41,7 @@ z.stats <- function(correlation = "DAK", pprRange = "lp", interval = "coarse") {
                               MAAPE = sum(atan(abs((z.chart - z.calc) / z.chart))) / n()
 
     )
-    tibble::as.tibble(smry_tpr_ppr)
+    tibble::as_tibble(smry_tpr_ppr)
 }
 
 

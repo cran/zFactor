@@ -6,9 +6,9 @@ knitr::opts_chunk$set(echo=T, comment=NA, error=T, warning=F, message = F, fig.a
 #knitcitations::cleanbib()
 #bib_file <- system.file("doc", "bibliography.bib", package = "zFactor")
 #bib <- read.bibtex(bib_file)
-library(knitcitations)
-bib_file <- system.file("doc", "bibliography.bib", package = "zFactor")
-bib <- read.bibtex(bib_file)
+# library(knitcitations)
+# bib_file <- system.file("doc", "bibliography.bib", package = "zFactor")
+# bib <- read.bibtex(bib_file)
 
 ## ------------------------------------------------------------------------
 # get a z value
@@ -118,7 +118,7 @@ tpr2 <- c(1.05, 1.1, 1.2, 1.3)
 ppr2 <- c(0.5, 1.0, 1.5, 2, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5) 
 
 sk_dak_2 <- createTidyFromMatrix(ppr2, tpr2, correlation = "PP")
-as.tibble(sk_dak_2)
+as_tibble(sk_dak_2)
 
 p <- ggplot(sk_dak_2, aes(x=Ppr, y=z.calc, group=Tpr, color=Tpr)) +
     geom_line() +
@@ -148,7 +148,7 @@ library(tibble)
 tpr_all <- getStandingKatzTpr(pprRange = "lp")
 ppr <- c(0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5) 
 sk_corr_all <- createTidyFromMatrix(ppr, tpr_all, correlation = "PP")
-as.tibble(sk_corr_all)
+as_tibble(sk_corr_all)
 
 p <- ggplot(sk_corr_all, aes(x=Ppr, y=z.calc, group=Tpr, color=Tpr)) +
     geom_line() +
@@ -188,7 +188,7 @@ ggplot(smry_tpr_ppr, aes(Ppr, Tpr)) +
 library(dplyr)
 
 sk_corr_all %>%
-    filter(Tpr %in% c("1.05", "1.1", "2.4", "2.6", "2.8", "3")) %>%
+    filter(Tpr %in% c("1.05", "1.1", "1.2", "2.6", "2.8", "3")) %>%
     ggplot(aes(x = z.chart, y=z.calc, group = Tpr, color = Tpr)) +
     geom_point(size = 3) +
     geom_line(aes(x = z.chart, y = z.chart), color = "black") +
@@ -197,7 +197,7 @@ sk_corr_all %>%
                   position=position_dodge(0.5))
 
 ## ------------------------------------------------------------------------
-as.tibble(smry_tpr_ppr)
+as_tibble(smry_tpr_ppr)
 
 ## ---- echo = FALSE-------------------------------------------------------
 knitr::opts_chunk$set(
@@ -206,5 +206,5 @@ knitr::opts_chunk$set(
 )
 
 ## ----results="asis", echo=FALSE------------------------------------------
-bibliography(style="citation")
+# bibliography(style="citation")
 

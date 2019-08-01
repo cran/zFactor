@@ -2,7 +2,7 @@
 library(zFactor)
 library(tibble)
 
-as.tibble(z.stats("HY"))
+as_tibble(z.stats("HY"))
 
 ## ------------------------------------------------------------------------
 stats_of_z.stats("MAPE")

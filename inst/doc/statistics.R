@@ -10,7 +10,7 @@ zFactor:::z.plot.range("HY", interval = "fine")
 
 ## ------------------------------------------------------------------------
 z_hy  <- z.stats("HY")
-sum_tpr <- as.tibble(z.stats("HY"))
+sum_tpr <- as_tibble(z.stats("HY"))
 
 hy <- ggplot(z_hy, aes(x = Tpr, y = RMSE, col = Tpr)) +
            geom_point()  + theme(legend.position="none") + 
@@ -24,7 +24,7 @@ boxplot(z_hy$RMSE,  horizontal = TRUE, main = "HY", xlab = "RMSE")
 #  MPE  = sum((z.calc - z.chart) / z.chart) * 100 / n(),
 
 ## ------------------------------------------------------------------------
-# sum_tpr <- as.tibble(z.stats("HY"))
+# sum_tpr <- as_tibble(z.stats("HY"))
 hy <- ggplot(z_hy, aes(x = Tpr, y = MPE, col = Tpr)) +
            geom_point()  + theme(legend.position="none") + 
     ggtitle("HY  - Mean Percentage error")
@@ -37,7 +37,7 @@ boxplot(z_hy$MPE,  horizontal = TRUE, main = "HY", xlab = "MPE")
 #  MAPE = sum(abs((z.calc - z.chart) / z.chart)) * 100 / n()
 
 ## ------------------------------------------------------------------------
-# sum_tpr <- as.tibble(z.stats("HY"))
+# sum_tpr <- as_tibble(z.stats("HY"))
 
 hy <- ggplot(z_hy, aes(x = Tpr, y = MAPE, col = Tpr)) +
            geom_point()  + theme(legend.position="none") + 
@@ -51,7 +51,7 @@ boxplot(z_hy$MAPE,  horizontal = TRUE, main = "HY", xlab = "MAPE")
 #  MSE  = sum((z.calc - z.chart)^2) / n()
 
 ## ------------------------------------------------------------------------
-sum_tpr <- as.tibble(z.stats("HY"))
+sum_tpr <- as_tibble(z.stats("HY"))
 hy <- ggplot(sum_tpr, aes(x = Tpr, y = MSE, col = Tpr)) +
            geom_point()  + theme(legend.position="none") + 
     ggtitle("HY - Mean Squared Error")
@@ -64,7 +64,7 @@ boxplot(z_hy$MSE,  horizontal = TRUE, main = "HY", xlab = "MSE")
 #  RSS  = sum((z.calc - z.chart)^2)
 
 ## ------------------------------------------------------------------------
-# sum_tpr <- as.tibble(z.stats("HY"))
+# sum_tpr <- as_tibble(z.stats("HY"))
 
 hy <- ggplot(z_hy, aes(x = Tpr, y = RSS, col = Tpr)) +
            geom_point()  + theme(legend.position="none") + 
@@ -78,7 +78,7 @@ boxplot(z_hy$RSS,  horizontal = TRUE, main = "HY", xlab = "RSS")
 #  MAE  = sum(abs(z.calc - z.chart)) / n()
 
 ## ------------------------------------------------------------------------
-# sum_tpr <- as.tibble(z.stats("HY"))
+# sum_tpr <- as_tibble(z.stats("HY"))
 
 hy <- ggplot(z_hy, aes(x = Tpr, y = MAE, col = Tpr)) +
            geom_point()  + theme(legend.position="none") + 
@@ -111,35 +111,35 @@ bb
 boxplot(z_bb$RMSE,  horizontal = TRUE, main = "BB", xlab = "RMSE")
 
 ## ------------------------------------------------------------------------
-sum_tpr <- as.tibble(z.stats("HY"))
+sum_tpr <- as_tibble(z.stats("HY"))
 hy <- ggplot(sum_tpr, aes(x = Tpr, y = RMSE, col = Tpr)) +
            geom_point() + ylim(0, 0.4) + theme(legend.position="none") + 
     ggtitle("Hall-Yarborough")
 hy
 
 ## ------------------------------------------------------------------------
-sum_tpr <- as.tibble(z.stats("DAK"))
+sum_tpr <- as_tibble(z.stats("DAK"))
 dak <- ggplot(sum_tpr, aes(x = Tpr, y = RMSE, col = Tpr)) +
            geom_point() + ylim(0, 0.4) + theme(legend.position="none") +
     ggtitle("Dranchuk-AbouKassem")
 dak
 
 ## ------------------------------------------------------------------------
-sum_tpr <- as.tibble(z.stats("SH"))
+sum_tpr <- as_tibble(z.stats("SH"))
 sh <- ggplot(sum_tpr, aes(x = Tpr, y = RMSE, col = Tpr)) +
            geom_point() + ylim(0, 0.4) + theme(legend.position="none") +
     ggtitle("Shell")
 sh
 
 ## ------------------------------------------------------------------------
-sum_tpr <- as.tibble(z.stats("N10"))
+sum_tpr <- as_tibble(z.stats("N10"))
 n10 <- ggplot(sum_tpr, aes(x = Tpr, y = RMSE, col = Tpr)) +
            geom_point() + ylim(0, 0.4) + theme(legend.position="none") +
     ggtitle("Neural-Network-10")
 n10
 
 ## ------------------------------------------------------------------------
-sum_tpr <- as.tibble(z.stats("PP"))
+sum_tpr <- as_tibble(z.stats("PP"))
 pp <- ggplot(sum_tpr, aes(x = Tpr, y = RMSE, col = Tpr)) +
            geom_point() + ylim(0, 0.4) + theme(legend.position="none") +
     ggtitle("Papp")
@@ -147,7 +147,7 @@ pp
 
 
 ## ------------------------------------------------------------------------
-sum_tpr <- as.tibble(z.stats("HY"))
+sum_tpr <- as_tibble(z.stats("HY"))
 sum_tpr
 
 ## ------------------------------------------------------------------------
